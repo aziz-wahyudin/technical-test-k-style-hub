@@ -1,16 +1,16 @@
 package factory
 
-// import (
-// 	mahasiswaDelivery "aziz-wahyudin/nashta-mini-project/features/mahasiswa/delivery"
-// 	mahasiswaRepo "aziz-wahyudin/nashta-mini-project/features/mahasiswa/repository"
-// 	mahasiswaService "aziz-wahyudin/nashta-mini-project/features/mahasiswa/service"
+import (
+	memberDelivery "aziz-wahyudin/technical-test-k-style-hub/features/member/delivery"
+	memberRepo "aziz-wahyudin/technical-test-k-style-hub/features/member/repository"
+	memberService "aziz-wahyudin/technical-test-k-style-hub/features/member/service"
 
-// 	"github.com/labstack/echo/v4"
-// 	"gorm.io/gorm"
-// )
+	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
+)
 
-// func InitFactory(e *echo.Echo, db *gorm.DB) {
-// 	mahasiswaRepoFactory := mahasiswaRepo.New(db)
-// 	mahasiswaServiceFactory := mahasiswaService.New(mahasiswaRepoFactory)
-// 	mahasiswaDelivery.New(mahasiswaServiceFactory, e)
-// }
+func InitFactory(e *echo.Echo, db *gorm.DB) {
+	memberRepoFactory := memberRepo.New(db)
+	memberServiceFactory := memberService.New(memberRepoFactory)
+	memberDelivery.New(memberServiceFactory, e)
+}
