@@ -29,3 +29,16 @@ func (r *memberRepository) Create(input member.Member) (row int, err error) {
 	}
 	return int(tx.RowsAffected), nil
 }
+
+// Update implements member.RepositoryInterface
+func (r *memberRepository) Update(input member.Member, id int) (err error) {
+	memberGorm := FromCore(input)
+	tx := r.db.Where("id= ?", id).Updates(memberGorm)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return errors.New("update failed, error query")
+	}
+	return nil
+}

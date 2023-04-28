@@ -27,8 +27,10 @@ type LikeReview struct {
 
 type ServiceInterface interface {
 	Create(input Member) (err error)
+	Update(input Member, id int) (err error)
 }
 
 type RepositoryInterface interface {
 	Create(input Member) (row int, err error)
+	Update(input Member, id int) (err error)
 }
