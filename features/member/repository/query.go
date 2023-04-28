@@ -56,3 +56,16 @@ func (r *memberRepository) Delete(id int) (row int, err error) {
 	}
 	return int(tx.RowsAffected), nil
 }
+
+// GetAll implements member.RepositoryInterface
+func (r *memberRepository) GetAll() (data []member.Member, err error) {
+	var members []Member
+
+	tx := r.db.Find(&members)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	dataCore := ToCoreList(members)
+	return dataCore, nil
+}
