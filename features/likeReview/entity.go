@@ -10,8 +10,10 @@ type LikeReview struct {
 
 type ServiceInterface interface {
 	Create(input LikeReview) (err error)
+	Delete(idMember int, idReview int) (err error)
 }
 
 type RepositoryInterface interface {
 	Create(input LikeReview) (row int, err error)
+	Delete(idMember int, idReview int) (row int, err error)
 }
