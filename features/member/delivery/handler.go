@@ -22,6 +22,7 @@ func New(service member.ServiceInterface, e *echo.Echo) {
 	e.POST("/members", handler.CreateMember)
 	e.PUT("/members/:id_member", handler.UpdateMember)
 	e.DELETE("/members/:id_member", handler.DeleteMember)
+	e.GET("/members", handler.GetAllMember)
 }
 
 func (d *MemberDelivery) CreateMember(c echo.Context) error {
@@ -64,4 +65,15 @@ func (d *MemberDelivery) DeleteMember(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.SuccessResponse("success delete member information"))
 
+}
+
+func (d *MemberDelivery) GetAllMember(c echo.Context) error {
+	results, err := d.MemberService.GetAll()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error read data"))
+	}
+
+	dataResponse := FromCoreList(results)
+
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all member information", dataResponse))
 }

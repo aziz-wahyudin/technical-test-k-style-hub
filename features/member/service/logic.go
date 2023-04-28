@@ -40,3 +40,12 @@ func (s *memberService) Delete(id int) (err error) {
 	}
 	return nil
 }
+
+// GetAll implements member.ServiceInterface
+func (s *memberService) GetAll() (data []member.Member, err error) {
+	data, err = s.memberRepository.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

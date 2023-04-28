@@ -29,10 +29,12 @@ type ServiceInterface interface {
 	Create(input Member) (err error)
 	Update(input Member, id int) (err error)
 	Delete(id int) (err error)
+	GetAll() (data []Member, err error)
 }
 
 type RepositoryInterface interface {
 	Create(input Member) (row int, err error)
 	Update(input Member, id int) (err error)
 	Delete(id int) (row int, err error)
+	GetAll() (data []Member, err error)
 }
