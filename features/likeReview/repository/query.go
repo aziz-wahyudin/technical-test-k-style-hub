@@ -29,3 +29,20 @@ func (r *likeReviewRepository) Create(input likereview.LikeReview) (row int, err
 	}
 	return int(tx.RowsAffected), nil
 }
+
+// Delete implements likereview.RepositoryInterface
+func (r *likeReviewRepository) Delete(idMember int, idReview int) (row int, err error) {
+	likeReview := LikeReview{
+		MemberID:        uint(idMember),
+		ReviewProdcutID: uint(idReview),
+	}
+
+	tx := r.db.Delete(&likeReview)
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return -1, errors.New("delete by id failed, error query")
+	}
+	return int(tx.RowsAffected), nil
+}

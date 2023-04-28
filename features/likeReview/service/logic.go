@@ -22,3 +22,12 @@ func (s *likeReviewService) Create(input likereview.LikeReview) (err error) {
 	}
 	return nil
 }
+
+// Delete implements likereview.ServiceInterface
+func (s *likeReviewService) Delete(idMember int, idReview int) (err error) {
+	_, err = s.likeReviewRepository.Delete(idMember, idReview)
+	if err != nil {
+		return err
+	}
+	return nil
+}

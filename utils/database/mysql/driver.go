@@ -58,8 +58,10 @@ type ReviewProdcut struct {
 
 type LikeReview struct {
 	gorm.Model
-	Likes           int `gorm:"default:0"`
-	Dislikes        int `gorm:"default:0"`
-	MemberID        uint
-	ReviewProdcutID uint
+	Likes           int           `gorm:"default:0"`
+	Dislikes        int           `gorm:"default:0"`
+	MemberID        uint          `gorm:"primaryKey"`
+	ReviewProdcutID uint          `gorm:"primaryKey"`
+	Review          ReviewProdcut `gorm:"foreignKey:ReviewID"`
+	Member          Member        `gorm:"foreignKey:MemberID"`
 }

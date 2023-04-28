@@ -21,6 +21,7 @@ func New(service likereview.ServiceInterface, e *echo.Echo) {
 		LikeReviewService: service,
 	}
 	e.POST("/likereviews/:id_review", handler.CreateLikeReview)
+	e.DELETE("/likereviews/:id_review", handler.DeleteLikeReview)
 }
 
 func (d *LikeReviewDelivery) CreateLikeReview(c echo.Context) error {
@@ -42,4 +43,14 @@ func (d *LikeReviewDelivery) CreateLikeReview(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, helper.SuccessResponse("success create like and review information"))
+}
+
+func (d *LikeReviewDelivery) DeleteLikeReview(c echo.Context) error {
+	idReview, _ := strconv.Atoi(c.Param("id_review"))
+	idMember := middlewares.ExtractTokenUserId(c)
+	err := d.LikeReviewService.Delete(idMember, idReview)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error delete data"))
+	}
+	return c.JSON(http.StatusOK, helper.SuccessResponse("success delete like & review information"))
 }
