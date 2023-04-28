@@ -22,3 +22,12 @@ func (s *memberService) Create(input member.Member) (err error) {
 	}
 	return nil
 }
+
+// Update implements member.ServiceInterface
+func (s *memberService) Update(input member.Member, id int) (err error) {
+	err = s.memberRepository.Update(input, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
