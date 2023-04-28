@@ -21,6 +21,7 @@ func New(service member.ServiceInterface, e *echo.Echo) {
 	}
 	e.POST("/members", handler.CreateMember)
 	e.PUT("/members/:id_member", handler.UpdateMember)
+	e.DELETE("/members/:id_member", handler.DeleteMember)
 }
 
 func (d *MemberDelivery) CreateMember(c echo.Context) error {
@@ -52,5 +53,15 @@ func (d *MemberDelivery) UpdateMember(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed update data"+err.Error()))
 	}
 	return c.JSON(http.StatusOK, helper.SuccessResponse("success update member information"))
+
+}
+
+func (d *MemberDelivery) DeleteMember(c echo.Context) error {
+	memberId, _ := strconv.Atoi(c.Param("id_member"))
+	err := d.MemberService.Delete(memberId)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error delete data"))
+	}
+	return c.JSON(http.StatusOK, helper.SuccessResponse("success delete member information"))
 
 }

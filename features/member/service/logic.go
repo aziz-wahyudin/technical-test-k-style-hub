@@ -31,3 +31,12 @@ func (s *memberService) Update(input member.Member, id int) (err error) {
 	}
 	return nil
 }
+
+// Delete implements member.ServiceInterface
+func (s *memberService) Delete(id int) (err error) {
+	_, err = s.memberRepository.Delete(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

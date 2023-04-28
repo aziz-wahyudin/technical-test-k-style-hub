@@ -42,3 +42,17 @@ func (r *memberRepository) Update(input member.Member, id int) (err error) {
 	}
 	return nil
 }
+
+// Delete implements member.RepositoryInterface
+func (r *memberRepository) Delete(id int) (row int, err error) {
+	member := Member{}
+
+	tx := r.db.Delete(&member, id)
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return -1, errors.New("delete by id failed, error query")
+	}
+	return int(tx.RowsAffected), nil
+}
